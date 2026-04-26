@@ -26,9 +26,11 @@
                 <th>Tgl</th>
                 <th>Ref</th>
                 <th>Jenis</th>
-                <th>Penerima/Mekanik</th>
+                <th>No. Plat</th>
+                <th>Mekanik/Customer</th>
                 <th>Barang</th>
                 <th>Qty</th>
+                <th>Admin</th>
             </tr>
         </thead>
         <tbody>
@@ -37,9 +39,11 @@
                 <td>{{ $detail->outbound?->date }}</td>
                 <td>{{ $detail->outbound?->reference_number ?? '-' }}</td>
                 <td>{{ ucfirst($detail->outbound?->type ?? '-') }}</td>
+                <td>{{ $detail->outbound?->license_plate ?? '-' }}</td>
                 <td>{{ $detail->outbound?->mechanic?->name ?? 'Penjualan' }}</td>
                 <td>{{ $detail->part?->name }}</td>
                 <td>{{ $detail->quantity }} {{ $detail->part?->unit }}</td>
+                <td>{{ $detail->outbound?->user?->name }}</td>
             </tr>
             @endforeach
         </tbody>

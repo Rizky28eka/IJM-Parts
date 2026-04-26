@@ -23,6 +23,7 @@ class PartsExport implements FromCollection, WithHeadings, WithMapping
             'Brand',
             'Unit',
             'Location',
+            'Buy Price',
             'Min Stock',
             'Current Stock',
         ];
@@ -37,6 +38,7 @@ class PartsExport implements FromCollection, WithHeadings, WithMapping
             $part->brand?->name ?? '-',
             $part->unit,
             $part->location ?? '-',
+            $part->buy_price,
             $part->min_stock,
             $part->stock,
         ];

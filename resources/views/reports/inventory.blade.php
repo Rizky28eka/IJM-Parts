@@ -25,6 +25,8 @@
                 <th>Nama Barang</th>
                 <th>Kategori</th>
                 <th>Merek</th>
+                <th>Lokasi</th>
+                <th>Harga Beli</th>
                 <th>Stok</th>
                 <th>Satuan</th>
             </tr>
@@ -36,6 +38,8 @@
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->category?->name ?? '-' }}</td>
                 <td>{{ $item->brand?->name ?? '-' }}</td>
+                <td>{{ $item->location ?? '-' }}</td>
+                <td>Rp {{ number_format($item->buy_price, 0, ',', '.') }}</td>
                 <td>{{ $item->stock }}</td>
                 <td>{{ $item->unit }}</td>
             </tr>

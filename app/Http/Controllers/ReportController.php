@@ -24,7 +24,7 @@ class ReportController extends Controller
     {
         $request->validate([
             'type' => 'required|in:inventory,inbound,outbound',
-            'format' => 'required|in:excel,pdf',
+            'format' => 'required|in:pdf,csv',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
         ]);
@@ -34,25 +34,32 @@ class ReportController extends Controller
         $start = $request->input('start_date');
         $end = $request->input('end_date');
 
-        if ($format === 'excel') {
-            return $this->exportExcel($type, $start, $end);
+        if ($format === 'csv') {
+            return $this->exportData($type, $format, $start, $end);
         } else {
             return $this->exportPdf($type, $start, $end);
         }
     }
 
-    private function exportExcel($type, $start, $end)
+    private function exportData($type, $format, $start, $end)
     {
-        $filename = "report_{$type}_" . now()->format('Ymd_His') . ".xlsx";
+        $extension = 'csv';
+        $filename = "report_{$type}_" . now()->format('Ymd_His') . ".{$extension}";
 
+        $export = null;
         switch ($type) {
             case 'inventory':
-                return Excel::download(new PartsExport, $filename);
+                $export = new PartsExport;
+                break;
             case 'inbound':
-                return Excel::download(new InboundExport($start, $end), $filename);
+                $export = new InboundExport($start, $end);
+                break;
             case 'outbound':
-                return Excel::download(new OutboundExport($start, $end), $filename);
+                $export = new OutboundExport($start, $end);
+                break;
         }
+
+        return Excel::download($export, $filename, \Maatwebsite\Excel\Excel::CSV);
     }
 
     private function exportPdf($type, $start, $end)

@@ -29,6 +29,7 @@
                 <th>Barang</th>
                 <th>SKU</th>
                 <th>Qty</th>
+                <th>Admin</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +41,7 @@
                 <td>{{ $detail->part?->name }}</td>
                 <td>{{ $detail->part?->sku }}</td>
                 <td>{{ $detail->quantity }} {{ $detail->part?->unit }}</td>
+                <td>{{ $detail->inbound?->user?->name }}</td>
             </tr>
             @endforeach
         </tbody>
